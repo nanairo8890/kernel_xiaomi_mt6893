@@ -39,7 +39,7 @@ for arg in "$@"; do
 done
 
 [ "$CLEAN_BUILD" = true ] && rm -rf out
-[ "$INCLUDE_KSU" = true ] && echo "Save your stuff!!" && curl -LSs "https://raw.githubusercontent.com/tiann/KernelSU/main/kernel/setup.sh" | bash -s v0.9.5
+[ "$INCLUDE_KSU" = true ] && echo "Save your stuff!!" && curl -LSs "https://raw.githubusercontent.com/KernelSU-Next/KernelSU-Next/next/kernel/setup.sh" | bash -s legacy
 
 # Compilation process
 mkdir -p out
@@ -55,7 +55,7 @@ if make -j$(nproc --all) O=out ARCH=arm64 CC="ccache clang" LLVM=1 LLVM_IAS=1 CR
     rm -rf AnyKernel3
     if [ "$INCLUDE_KSU" = true ]; then
         git restore drivers/{Makefile,Kconfig}
-        rm -rf KernelSU drivers/kernelsu
+        rm -rf KernelSU-Next drivers/kernelsu
     fi
     echo -e "\nCompleted in $((SECONDS / 60)) minute(s) and $((SECONDS % 60)) second(s)!"
     echo "Zip: $ZIPNAME"
