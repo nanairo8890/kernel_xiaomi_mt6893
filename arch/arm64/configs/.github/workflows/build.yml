@@ -1,0 +1,28 @@
+name: Build agate kernel (KernelSU Next)
+
+on:
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: ubuntu-22.04
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: lineage-23.2
+
+      - name: Instalar dependencias
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y build-essential libssl-dev libncurses-dev flex bison bc git zip ccache python3 device-tree-compiler
+
+      - name: Compilar kernel
+        run: |
+          chmod +x build.sh
+          ./build.sh agate -ksu
+
+      - name: Subir resultado
+        uses: actions/upload-artifact@v4
+        with:
+          name: agate-kernel-ksunext
+          path: "*.zip"
